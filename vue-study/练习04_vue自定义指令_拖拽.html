@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue自定义指令_拖拽</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				padding: 10px;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+			.hello,
+			.world{
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				color: #fff;
+			}
+
+			.hello {
+				left: 0;
+				top: 0;
+				background-color: #000;
+			}
+
+			.world {
+				right: 0;
+				top: 0;
+				background-color: green;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<div class="hello" v-drag>itany</div>
+			<div class="world" v-drag>网博</div>
+		</div>
+
+		
+		<script src="js/vue.js"></script>
+		<script>
+			Vue.directive('drag', function(el){
+				el.onmousedown = function(e) {
+					const disX = e.clientX - el.offsetLeft;
+					const disY = e.clientY - el.offsetTop;
+
+					document.onmousemove = function(e){
+						let posL = e.clientX - disX;
+						let posT = e.clientY - disY;
+						const maxL = document.documentElement.clientWidth - el.offsetWidth;
+						const maxT = document.documentElement.clientHeight - el.offsetHeight;
+
+						if( posL < 0 ){
+							posL = 0;
+						}else if( posL >= maxL ){
+							posL = maxL;
+						}
+
+						if( posT < 0 ){
+							posT = 0;
+						}else if( posT >= maxT ){
+							posT = maxT;
+						}
+
+						el.style.left = posL + 'px';
+						el.style.top = posT + 'px';
+					};
+
+					document.onmouseup = function(){
+						document.onmousemove = null;
+						document.onmouseup = null;
+					};
+
+					e.preventDefault();
+				};
+			});
+
+			const vm = new Vue({
+				el: '#itany',
+
+				data: {
+					msg: 'welcome to itany'
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue_axios请求数据（部分配合php）</title>
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				padding: 10px;
+				overflow: hidden;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<button @click="send">发送ajax请求</button>
+			<button @click="sendGet">发送GET请求</button>
+			<button @click="sendPost">发送POST请求</button>
+
+			<hr>
+			<h3>axios不支持jsonp跨域，方法：</h3>
+			<h5>1.使用CORS后端跨域支持。（github就是如此）</h5>
+			<h5>2.写个后端转发该请求，用代理的方式实现。</h5>
+
+			<hr>
+			GitHub ID: <input type="text" v-model="uid">
+			<button @click="getUserById(uid)">获取指定GitHub账户信息并显示</button>
+			<br>
+			<h5>姓名： {{ githubUser.name }}</h5>
+			<h5>座右铭： {{ githubUser.bio }}</h5>
+			<h5>头像： <img :src="githubUser.avatar_url"></h5>
+		</div>
+		
+		<script src="js/vue.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script>
+			const vm = new Vue({
+				el: '#itany',
+				data: {
+					user: {
+						name: '秋香',
+						age: 18
+					},
+					uid: '',
+					githubUser: {}
+				},
+				methods: {
+					send(){
+						axios({
+							method: 'get',
+							url: 'data/userJson.json'
+						}).then(res => {
+							console.log( res.data );
+						}).catch(err => {
+							console.log( err );
+						});
+					},
+
+					sendGet(){
+						axios.get('data/userGet.php', {
+							params: {
+								name: '王力宏',
+								age: 42
+							}
+						})
+						.then(res => {
+							console.log( res.data );
+						})
+						.catch(err => {
+							console.log( err );
+						});
+					},
+
+					/** POST方式直接传对象数据会有问题，解决方法：
+					 *	1.使用transformRequest循环拼接（Request Payload => Form Data）
+					 *	2.const qs = require('qs'); qs.stringify(this.user);
+					 */
+					sendPost(){
+						axios.post('data/userPost.php', this.user, {
+							transformRequest: [function(data){
+								let params = '';
+								for( let key in data ){
+									params += key + '=' + data[key] + '&';
+								}
+								return params.slice(0, -1);
+							}]
+						})
+						.then(res => {
+							console.log( res.data );
+						})
+						.catch(err => {
+							console.log( err );
+						});
+					},
+
+					// 利用CORS后端跨域请求github用户信息
+					getUserById(uid){
+						axios.get('https://api.github.com/users/' + this.uid)
+						.then(res => {
+							console.log( res.data );
+							this.githubUser = res.data;
+						}).catch(err => {
+							console.log( err );
+						});
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

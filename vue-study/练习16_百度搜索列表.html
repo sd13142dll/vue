@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue_百度搜索列表</title>
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			html,
+			body,
+			#itany {
+				height: 100%;
+			}
+			body {
+				overflow: hidden;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+			#itany {
+				padding: 10px;
+			}
+			.searchWrap {
+				position: relative;;
+				width: 40%;
+			}
+			.searchInput {
+				width: 100%;
+				height: 30px;
+				padding: 0 5px;
+				font-size: 14px;
+				line-height: 20px;
+			}
+			.searchlist {
+				position: absolute;
+				top: 30px;
+				width: 100%;
+				border: 1px solid #999;
+				border-top: none;
+				list-style: none;
+			}
+			.searchlist li {
+				padding: 0 5px;
+				line-height: 30px;
+				cursor: default;
+			}
+			.searchlist .active {
+				background-color: #eee;
+			}
+			.searchlist li:hover {
+				background-color: #d9d9d9;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany" @click.self="isChangeItem = true">
+			<div class="searchWrap">
+				<input type="text" class="searchInput" v-model="keywords" @keyup="getData" @focus="getData" @keydown.down="changeDown" @keydown.up.prevent="changeUp" @keydown.enter="goEnter(keywords)">
+				<ul class="searchlist" v-show="listData.length > 0 && !isChangeItem">
+					<li v-for="(value, index) of listData" :class="{active: index === searchIndex}" @click="changeItem(value)">{{ value }}</li>
+				</ul>
+			</div>
+		</div>
+		
+		<script src="js/vue.js"></script>
+		<script src="js/vue-resource.min.js"></script>
+		<script>
+			const vm = new Vue({
+				el: '#itany',
+
+				data: {
+					initWord: '',
+					keywords: '',
+					listData: [],
+					searchIndex: -1,
+					isChangeItem: false
+				},
+
+				methods: {
+					getData(e){
+						// https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&json=1&p=3&sid=1454_21098_26350_20928&req=2&csor=1&cb=jQuery1102030297509114826315_1527352427072&_=1527352427075
+						if( e.keyCode === 38 || e.keyCode === 40 ){
+							return;
+						}
+
+						this.initWord = this.keywords;
+						this.isChangeItem = false;
+						this.listData = [];
+
+						this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su', {
+							jsonp: 'cb', // 百度使用的jsonp参数名为cb，所以要修改
+							params: {
+								wd: this.keywords
+							}
+						}).then(res => {
+							this.listData = res.data.s;
+						});
+					},
+
+					changeDown(){
+						this.searchIndex++;
+						if( this.searchIndex >= this.listData.length ){
+							this.searchIndex = -1;
+							this.keywords = this.initWord;
+						}else {
+							this.keywords = this.listData[ this.searchIndex ];
+						}
+					},
+
+					changeUp(){
+						this.searchIndex--;
+						if( this.searchIndex === -1 ){
+							this.keywords = this.initWord;
+						}else {
+							if( this.searchIndex === -2 ){
+								this.searchIndex = this.listData.length - 1;
+							}
+							this.keywords = this.listData[ this.searchIndex ];
+						}
+					},
+
+					changeItem( val ){
+						this.keywords = val;
+						this.isChangeItem = true;
+					},
+
+					goEnter( val ){
+						console.log( val );
+						this.changeItem( val );
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

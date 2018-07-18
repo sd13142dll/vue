@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue父子组件及组件间数据传递</title>
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				padding: 10px;
+				overflow: hidden;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<my-hello></my-hello>
+		</div>
+	
+		<template id="myHello">
+			<div>
+				<h3>我是hello父组件</h3>
+				<h3>访问自己的数据：{{ msg }}, {{ name }}, {{ age }}, {{ user.name }}</h3>
+				<h3>访问子组件的数据：{{ sex }}, {{ height }}</h3>
+
+				<hr>
+
+				<my-world :msg="msg" :name="name" :age="age" :user="user" @e-world="getData"></my-world>
+			</div>
+		</template>
+
+		<template id="myWorld">
+			<div>
+				<h4>我是world子组件</h4>
+				<h4>访问父组件中的数据：{{ msg }}, {{ name }}, {{ age }}, {{ user.name }}</h4>
+				<button @click="send">将子组件的数据向上发送给父组件</button>
+			</div>
+		</template>
+
+		
+		<script src="js/vue.js"></script>
+		<script> 
+			const vm = new Vue({ // 根组件
+				el: '#itany',
+
+				components: {
+					'my-hello': { // 父组件
+						data(){
+							return {
+								msg: '我喜欢打篮球！',
+								name: 'Danny',
+								age: 25,
+								user: {
+									id: 9527,
+									name: '唐伯虎'
+								},
+								sex: '',
+								height: ''
+							}
+						},
+						methods: {
+							getData( sex, height ){
+								this.sex = sex;
+								this.height = height;
+							}
+						},
+						template: '#myHello',
+						
+						components: {
+							'my-world': { // 子组件
+								data(){
+									return {
+										sex: 'male',
+										height: 178
+									}
+								},
+								methods: {
+									send(){
+										// 此处的this表示当前子组件实例
+										// console.log( this );
+
+										// 使用$emit()触发一个事件，发送数据
+										this.$emit('e-world', this.sex, this.height);
+									}
+								},
+								template: '#myWorld',
+								// props: ['msg', 'name', 'age', 'user'],
+								// props也可以是对象，允许配置高级设置，如类型判断、数据校验、设置默认值
+								props: {
+									msg: String,
+									name: {
+										type: String,
+										required: true
+									},
+									age: {
+										type: Number,
+										default: 18,
+										validator: function( value ){
+											return value >= 0;
+										}
+									},
+									user: {
+										type: Object,
+										// 对象或数组的默认值必须使用函数返回对应类型
+										default(){
+											return {
+												id: 3306,
+												name: '秋香'
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

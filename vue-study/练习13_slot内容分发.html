@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue_slot内容分发</title>
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				padding: 10px;
+				overflow: hidden;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<my-hello>
+				<ul slot="s1">
+					<li>aaa</li>
+					<li>bbb</li>
+					<li>ccc</li>
+				</ul>
+
+				<ol slot="s2">
+					<li>111</li>
+					<li>222</li>
+					<li>333</li>
+				</ol>
+
+				<b>23333</b>
+			</my-hello>
+		</div>
+	
+		<template id="hello">
+			<div>
+				<slot name="s2"></slot>
+				<h3>欢迎来到Vue</h3>
+				<slot name="s1"></slot>
+				<main><slot></slot></main>
+			</div>
+		</template>
+		
+		<script src="js/vue.js"></script>
+		<script>
+			const vm = new Vue({
+				el: '#itany',
+				components: {
+					'my-hello': {
+						template: '#hello'
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

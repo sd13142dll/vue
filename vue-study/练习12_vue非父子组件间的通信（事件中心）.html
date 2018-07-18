@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue非父子组件间的通信（事件中心）</title>
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				padding: 10px;
+				overflow: hidden;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<my-a></my-a>
+			<my-b></my-b>
+			<my-c></my-c>
+		</div>
+
+		<template id="a">
+			<div>
+				<h3>A组件: {{ name }}</h3>
+				<button @click="send">将数据发送给C组件</button>
+				<hr>
+			</div>
+		</template>
+
+		<template id="b">
+			<div>
+				<h3>B组件：{{ age }}</h3>
+				<button @click="send">将数据发送给C组件</button>
+				<hr>
+			</div>
+		</template>
+
+		<template id="c">
+			<div>
+				<h3>C组件：{{ name }}， {{ age }}</h3>
+			</div>
+		</template>
+
+		
+		<script src="js/vue.js"></script>
+		<script>
+			var Event = new Vue(); // 创建空的Vue实例作为事件中心
+
+			var ComponentA = {
+				template: '#a',
+				data(){
+					return {
+						name: 'tom'
+					}
+				},
+				methods: {
+					send(){
+						Event.$emit('data-a', this.name);
+					}
+				}
+			};
+
+			var ComponentB = {
+				template: '#b',
+				data(){
+					return {
+						age: 23
+					}
+				},
+				methods: {
+					send(){
+						Event.$emit('data-b', this.age);
+					}
+				}
+			};
+
+			var ComponentC = {
+				template: '#c',
+				data(){
+					return {
+						name: '',
+						age: ''
+					}
+				},
+				mounted(){
+					Event.$on('data-a', name => {
+						this.name = name;
+					});
+					Event.$on('data-b', age => {
+						this.age = age;
+					});
+				}
+			};
+
+			const vm = new Vue({
+				el: '#itany',
+				components: {
+					'my-a': ComponentA,
+					'my-b': ComponentB,
+					'my-c': ComponentC
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

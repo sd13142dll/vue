@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue_定义组件的方式</title>
+		<link rel="stylesheet" href="css/animate.css">
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<my-hello :name="name"></my-hello>
+			<my-world :name="name"></my-world>
+		</div>
+		
+		<script src="js/vue.js"></script>
+		<script>
+			// 全局组件
+			Vue.component('my-hello', {
+				data(){
+					return {
+						msg: '子组件的name'
+					}
+				},
+				props: ['name'],
+				template: '<h3>My Hello! {{msg}} {{name}}</h3>'
+			});
+
+			const vm = new Vue({
+				el: '#itany',
+				data: {
+					name: 'tom'
+				},
+				// 局部组件，限于当前vue实例中
+				components: {
+					'my-world': {
+						props: ['name'],
+						template: '<h3>My World! {{name}}</h3>'
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue_路由嵌套-参数传递-路由结合动画</title>
+		<link rel="stylesheet" href="css/animate.css">
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				overflow: hidden;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+			#itany {
+				padding: 20px;
+			}
+			.nav {
+				line-height: 30px;
+			}
+			.nav a {
+				color: #666;
+			}
+			#itany .active {
+				color: blue;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<div class="nav">
+				<!-- 使用router-link组件来定义导航，to属性指定链接url -->
+				<router-link to="/home">主页</router-link>
+				<router-link to="/user">用户</router-link>
+			</div>
+
+			<div>
+				<transition enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOutRight">
+					<!-- router-view用来显示路由内容 -->
+					<router-view></router-view>
+				</transition>
+			</div>
+
+			<br>
+			<hr>
+			<button @click="push">跳转路由</button>
+			<button @click="replace">替换路由</button>
+		</div>
+
+		<template id="user">
+			<div>
+				<br>
+				<h3>用户信息</h4>
+				<br>
+
+				<ul>
+					<!-- 查询字符串方式的url传参；通过$route.query获取参数 -->
+					<router-link to="/user/login?name=sudan&pwd=123456" tag="li">用户登录</router-link>
+
+					<!-- rest风格的url传参；通过$route.params获取参数 -->
+					<router-link to="/user/register/james/1314520" tag="li">用户注册</router-link>
+				</ul>
+
+				<br>
+				<router-view></router-view>
+			</div>
+		</template>
+		
+		<script src="js/vue.js"></script>
+		<script src="js/vue-router.min.js"></script>
+		<script>
+			// 1.定义组件
+			const Home = {
+				template: '<h3>我是主页</h3>'
+			};
+			const User = {
+				template: '#user'
+			};
+			const Login = {
+				// 查询字符串方式的url传参；
+				// 通过$route.query获取参数，通过$route.path获取路径
+				template: '<div>用户登录。。。以查询字符串风格获取参数：{{ $route.query }}， {{ $route.path }}</div>'
+			};
+			const Register = {
+				// rest风格的url传参：
+				// 通过$route.params获取参数，通过$route.path获取路径
+				template: '<div>用户注册。。。以rest风格获取参数：{{ $route.params }}， {{ $route.path }}</div>'
+			};
+
+			// 2.配置路由
+			const routes = [
+				// 重定向，默认访问主页
+				{ 
+					path: '/', 
+					redirect: '/home' 
+				}, 
+				{ 
+					path: '/home', 
+					component: Home 
+				},
+				{ 
+					path: '/user', 
+					component: User,
+					children: [
+						{
+							path: 'login',
+							component: Login
+						},
+						{
+							// rest风格的url传参，需要以冒号指定对应的参数名
+							path: 'register/:username/:password',
+							component: Register
+						}
+					]
+				}
+			];
+
+			// 3.创建路由实例
+			const router = new VueRouter({
+				// 如果不想要很丑的 hash，我们可以用路由的 history 模式，这种模式要玩好，还需要后台配置支持
+				// mode: 'history', 
+
+				// 全局配置 <router-link> 的默认“激活 class 类名”。默认值: "router-link-active"
+				linkActiveClass: 'active', 
+
+				routes // 简写，相当于 routes: routes
+			});
+
+			// 4.创建根实例，并将路由挂载到Vue实例上
+			const vm = new Vue({
+				el: '#itany',
+				router,
+				methods: {
+					push(){
+						// js方式跳转路由
+						router.push({
+							path: '/home'
+						});
+					},
+
+					replace(){
+						// 替换路由，没有历史记录
+						router.replace({
+							path: '/user'
+						});
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

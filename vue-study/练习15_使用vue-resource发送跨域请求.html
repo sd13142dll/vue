@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue_使用vue-resource发送跨域请求</title>
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				padding: 10px;
+				overflow: hidden;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<button @click="sendJsonpTo360">向360搜索发送jsonp请求</button>
+			<button @click="sendJsonpToBaidu">向百度搜索发送jsonp请求</button>
+		</div>
+		
+		<script src="js/vue.js"></script>
+		<script src="js/vue-resource.min.js"></script>
+		<script>
+			const vm = new Vue({
+				el: '#itany',
+
+				methods: {
+					sendJsonpTo360(){
+						// https://sug.so.360.cn/suggest?callback=suggest_so&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=a
+						this.$http.jsonp('https://sug.so.360.cn/suggest',{
+							params: {
+								word: 'a'
+							}
+						}).then(res => {
+							console.log( res.data.s );
+						});
+					},
+
+					sendJsonpToBaidu(){
+						// https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&json=1&p=3&sid=1454_21098_26350_20928&req=2&csor=1&cb=jQuery1102030297509114826315_1527352427072&_=1527352427075
+						this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su', {
+							jsonp: 'cb', // 百度使用的jsonp参数名为cb，所以要修改
+							params: {
+								wd: 'a'
+							}
+						}).then(res => {
+							console.log( res.data.s );
+						});
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

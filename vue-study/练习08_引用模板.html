@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue_引用模板</title>
+		<link rel="stylesheet" href="css/animate.css">
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<my-hello></my-hello>
+			<my-hello></my-hello>
+		</div>
+
+		<!-- 这是HTML5新标签
+		<template id="myTemplate">
+			<div class="myTem">
+				<h3>{{ msg }}</h3>
+				<ul>
+					<li v-for="item of arr">{{ item }}</li>
+				</ul>
+			</div>
+		</template>
+	  	-->
+
+		<!-- 这是推荐的方式 -->
+		<script type="text/x-template" id="myTemplate">
+			<div class="myTem">
+				<h3>{{ msg }}</h3>
+				<ul>
+					<li v-for="item of arr">{{ item }}</li>
+				</ul>
+			</div>
+		</script>
+		
+		<script src="js/vue.js"></script>
+		<script>
+			const vm = new Vue({
+				el: '#itany',
+				components: {
+					'my-hello': {
+						data(){
+							return {
+								msg: '我是巢湖人！',
+								arr: ['tom', 'jack', 'mike']
+							}
+						},
+						template: '#myTemplate'
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

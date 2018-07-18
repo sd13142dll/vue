@@ -1,0 +1,20 @@
+import Home from './components/Home.vue'
+import News from './components/News.vue'
+
+export default {
+	routes: [
+		{
+			path: '/',
+			component: Home
+		},
+		{
+			path: '/home',
+			component: Home
+		},
+
+		{
+			path: '/news',
+			component: News
+		}
+	]
+}

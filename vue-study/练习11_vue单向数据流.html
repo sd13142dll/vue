@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue单向数据流</title>
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				padding: 10px;
+				overflow: hidden;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<h2>父组件：{{ name }}</h2>
+			<h2>父组件：{{ user.age }}</h2>
+			<input type="text" v-model="name">
+
+			<hr>
+
+			<!-- 子组件修改父组件数据方式一 
+				<my-hello :name.sync="name"></my-hello> -->
+			
+			<!-- 子组件修改父组件数据方式二（对象引用方法） -->
+			<my-hello :user='user'></my-hello>	
+		</div>
+
+	
+		<template id="myHello">
+			<div>
+				<h3>子组件：{{ name }}</h3>
+				<h3>子组件：{{ user.age }}</h3>
+				<button @click="change">修改数据</button>
+			</div>
+		</template>
+
+
+		
+		<script src="js/vue.js"></script>
+		<script> 
+			const vm = new Vue({ // 父组件
+				el: '#itany',
+
+				data:{
+					name: 'tom',
+					user: {
+						age: 26
+					}
+				},
+
+				components: {
+					'my-hello': { // 子组件
+						props: ['name', 'user'],
+						template: '#myHello',
+						methods: {
+							change(){
+								// 子组件修改父组件数据方式一
+								// this.$emit('update:name', 'alice');
+
+								// 子组件修改父组件数据方式二（对象引用方法）
+								this.user.age = 18;
+							}
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

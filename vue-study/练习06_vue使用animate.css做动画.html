@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Formax-Design">
+		<meta name="Description" content="" />
+		<meta name="Keywords" content="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>Vue使用animate.css做动画</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/animate.css">
+		<style>			
+			*,*:before,*:after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				padding: 10px;
+			}
+			[v-cloadk] {
+				display: none;
+			}
+			.main {
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				margin: 0 auto;
+			}
+
+		</style>
+	</head>
+
+
+	<body>
+		<div id="itany">
+			<button @click="flag = !flag">点我</button>
+		
+			<br>
+			<br>
+			
+			<!-- animated是animate.css必须的动画基础类 -->
+			<transition enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
+				<div class="main" v-show="flag">动画</div>
+			</transition>
+		</div>
+
+		
+		<script src="js/vue.js"></script>
+		<script>
+			const vm = new Vue({
+				el: '#itany',
+
+				data: {
+					flag: false	
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
