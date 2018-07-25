@@ -1,0 +1,205 @@
+*,*:after,*:before { box-sizing:border-box;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,button,select,option,textarea,p,span,blockquote { padding:0;margin:0;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { display:block;}
+html { font-size: 50px;}
+body { 
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto; 
+    font:0.24rem/1.5 "Helvetica Neue",Helvetica,"Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif; 
+    color: #333; 
+    background-color: #f1f1f1;
+}
+table { 
+    border-collapse:collapse; 
+    border-spacing:0;
+}
+img {
+    border:none; 
+    vertical-align:top;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+a { 
+    display:block; text-decoration:none; 
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+ul { 
+    list-style:none;
+}
+input,select,label,textarea { 
+    vertical-align:middle; 
+    outline:none; 
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+@font-face {
+    font-family: 'sgj';
+    src: url('../fonts/Suiguanjia-Mediu.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/Suiguanjia-Mediu.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+             url('../fonts/Suiguanjia-Mediu.woff') format('woff'), /* Modern Browsers */
+             url('../fonts/Suiguanjia-Mediu.ttf')  format('truetype'), /* Safari, Android, iOS */
+             url('../fonts/Suiguanjia-Mediu.svg#Suiguanjia-Mediu') format('svg'); /* Legacy iOS */
+
+
+     font-weight:normal; 
+     font-style:normal;
+}
+
+/* common */
+.bg_white,
+.projectSearch_wrap,
+.projectAll,
+.projectList {
+    background-color: #fff;
+}
+#index,
+.indexBanner,
+.detailBanner,
+.detailContent_title,
+.projectSearch {
+    position: relative;
+}
+.indexBanner_bgImg,
+.indexBanner_content,
+.indexBottom_logo,
+.detailBanner_img,
+.detailBanner_wrap,
+.detailBanner_logo,
+.detailBanner_content,
+.detailContent_title::before,
+.projectSearch_cover {
+    position: absolute;
+}
+.indexBanner_content,
+.indexColumn,
+.indexColumn_content,
+.detailData,
+.detailData_numFlex,
+.detailData_numFlex li,
+.detailItem,
+.detailItem_title,
+.detailMenu,
+.projectSearch_wrap,
+.projectAll,
+.projectList li a,
+.projectList_content,
+.categoryColumn,
+.categoryContent_title,
+.categoryProgress {
+    display: -webkit-box;
+    display: box;
+}
+
+.indexBanner_text,
+.indexColumn_textWrap,
+.indexColumn_mid,
+.detailData_numFlex,
+.detailData_num,
+.detailItem_content,
+.detailItem_name,
+.detailMenu li,
+.projectSearch,
+.projectList_name,
+.dateModuleMid,
+.categoryContent {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    width: 0;
+}
+
+.indexBanner_title,
+.detailContent_title,
+.detailItem_name,
+.detailItem_money,
+.projectSearch_cancel,
+.projectAll,
+.projectList li a {
+    font-size: 0.32rem;
+}
+.indexNodate_text,
+.categoryItem_money {
+    font-size: 0.3rem;
+}
+.detailMenu a,
+.categoryItem_name,
+.budgetList_name {
+    font-size: 0.28rem;
+}
+.indexColumn_numWrap,
+.detailItem_text {
+    font-size: 0.26rem;
+}
+.indexBanner_title {
+    color: #fff;
+}
+.detailData_day,
+.projectAll,
+.projectList li a {
+    color: #333;
+}
+.detailMenu a,
+.budgetMoney_total {
+    color: #666;    
+}
+.indexColumn_textWrap,
+.indexTitle,
+.indexColumn_surplusColor,
+.indexNodate_text,
+.detailBanner_type,
+.detailBanner_money,
+.detailData,
+.detailItem_money,
+.detailItem_text,
+.projectSearch_ph,
+.projectSearch_cancel,
+.projectMsg,
+.categoryTitle_date,
+.categoryMoney_name,
+.categoryContent_title,
+.budgetMoney_name,
+.budgetMoney_surplus {
+    color: #999;
+} 
+.indexColumn_outColor,
+.detailBanner_moneyOut,
+.detailItem_moneyOut,
+.categoryMoney_total,
+.categoryItem_money,
+.budgetMoney_category,
+.budgetList_expense {
+    color: #14ba89;
+}
+.indexColumn_inColor,
+.detailBanner_moneyIn,
+.detailItem_moneyIn,
+.detailItem_moneyIn {
+    color: #f2635c;
+}
+.indexColumn_title,
+.indexColumn_textItem,
+.detailBanner_titleS,
+.detailBanner_title,
+.detailBanner_money,
+.detailData_num,
+.detailItem_name,
+.projectList_name,
+.expenseTitle_name,
+.categoryMoney_total,
+.categoryTitle_name {
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.pop {
+    position: fixed;
+    z-index: 10;
+    left: 50%;
+    top: 0;
+    width: 100%;
+    max-width: 640px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    -webkit-transform: translate3d(-50%,0, 0);
+    transform: translate3d(-50%,0, 0);
+}
