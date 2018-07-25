@@ -37,6 +37,9 @@
     height: 200px;
     background: url(./img/indexBg.jpg) no-repeat;
     background-size: 100% 100%;
+    box-shadow: 0 5px 10px red;
+    animation: fadeIn 0.6s ease 0s;
+    display: flex;
   }
   .commonBg {
     width: 200px;
